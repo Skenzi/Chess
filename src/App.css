@@ -13,16 +13,17 @@
     flex-wrap: wrap;
 }
 
-.board-row {
-    
-}
-
 .cell {
     width: 64px;
     height: 64px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.cell .figure {
+    width: 48px;
+    height: 48px;
 }
 
 .white {
