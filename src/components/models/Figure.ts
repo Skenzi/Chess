@@ -1,4 +1,4 @@
-class Cell {
+export default class Figure {
   x: number;
 
   y: number;
@@ -11,5 +11,3 @@ class Cell {
     this.color = color;
   }
 }
-
-export default Cell;

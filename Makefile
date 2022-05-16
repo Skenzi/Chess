@@ -1,2 +1,0 @@
-start:
-	npx webpack serve
