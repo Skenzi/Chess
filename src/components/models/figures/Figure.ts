@@ -27,4 +27,15 @@ export default class Figure {
     this.logo = null;
     this.name = FigureNames.FIGURE;
   }
+
+  canMove(cell: Cell) {
+    if (cell.figure?.color === this.cell.figure?.color) return false;
+    return true;
+  }
+
+  moveFigure(cell: Cell) {
+    this.cell.figure = null;
+    this.cell = cell;
+    this.cell.figure = this;
+  }
 }

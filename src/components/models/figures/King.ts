@@ -6,7 +6,7 @@ import whiteLogo from '../../../assets/white-king.png';
 export default class King extends Figure {
   constructor(cell: Cell, color: string) {
     super(cell, color);
-    this.name = FigureNames.PAWN;
+    this.name = FigureNames.KING;
     this.logo = color === 'black' ? blackLogo : whiteLogo;
   }
 }

@@ -22,6 +22,7 @@
 }
 
 .cell .figure {
+    position: relative;
     width: 48px;
     height: 48px;
 }
@@ -32,4 +33,20 @@
 
 .black {
     background-color: cadetblue;
+}
+
+.selected {
+    background-color: brown;
+}
+
+.attacked {
+    background-color: darkgreen;
+}
+
+.available {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: chartreuse;
 }
