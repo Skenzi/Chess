@@ -4,12 +4,11 @@ import Cell from './models/Cell';
 interface CellProps {
     cell: Cell,
     selectedCell: Cell | null,
-    setSelectedCell: React.Dispatch<React.SetStateAction<Cell | null>>,
     clickHandler: (cell: Cell) => void,
 }
 
 function CellComponent({
-  cell, selectedCell, setSelectedCell, clickHandler,
+  cell, selectedCell, clickHandler,
 }: CellProps) {
   const selected = cell.x === selectedCell?.x && cell.y === selectedCell?.y;
   return (

@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import Board from './models/Board';
+import Player from './models/Player';
 import Cell from './models/Cell';
 import CellComponent from './CellComponent';
+import Players from './models/Players';
 
 interface BoardProps {
     board: Board,
+    players: Players,
     setBoard: React.Dispatch<React.SetStateAction<Board>>,
 }
 
-function BoardComponent({ board, setBoard }: BoardProps) {
+function BoardComponent({ board, players, setBoard }: BoardProps) {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<Player>(new Player('white'));
   function updateBoard() {
     const newBoard = new Board();
     newBoard.cells = board.cells;
@@ -20,7 +24,9 @@ function BoardComponent({ board, setBoard }: BoardProps) {
       setSelectedCell(null);
       board.highlightingCells(null);
       selectedCell?.figure?.moveFigure(cell);
-    } else if (cell.figure) {
+      players.changeCurrentPlayer();
+      setCurrentPlayer(players.getCurrentPlayer());
+    } else if (cell.figure && cell.figure.color === currentPlayer.color) {
       setSelectedCell(cell);
       board.highlightingCells(cell);
       // updateBoard();
@@ -35,7 +41,6 @@ function BoardComponent({ board, setBoard }: BoardProps) {
               key={cell.id}
               cell={cell}
               selectedCell={selectedCell}
-              setSelectedCell={setSelectedCell}
               clickHandler={clickHandler}
             />
           ))}
