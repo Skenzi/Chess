@@ -4,26 +4,25 @@ import BoardComponent from './components/BoardComponent';
 import TimersComponent from './components/TimersComponent';
 import ScoresComponent from './components/ScoresComponent';
 import Board from './components/models/Board';
-import Players from './components/models/Players';
 import Player from './components/models/Player';
 
 function App() {
   const [board, setBoard] = useState(new Board());
-  const [players, setPlayers] = useState(new Players());
-  const [currentPlayer, setCurrentPlayer] = useState<Player>(players.player1);
-  const [time, setTime] = useState(300);
+  const [whitePlayer, setWhitePlayers] = useState(new Player('white'));
+  const [blackPlayer, setBlackPlayers] = useState(new Player('black'));
+  const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
 
   function restart() {
-    currentPlayer.stopTimer();
     const newBoard = new Board();
-    const newPlayers = new Players();
     newBoard.initCells();
     newBoard.addFigures();
     setBoard(newBoard);
-    setPlayers(newPlayers);
-    setCurrentPlayer(newPlayers.player1);
-    setTime(newPlayers.player1.time);
+    setCurrentPlayer(whitePlayer);
   }
+
+  const swapPlayer = () => {
+    setCurrentPlayer(currentPlayer?.color === 'white' ? blackPlayer : whitePlayer);
+  };
 
   useEffect(() => {
     restart();
@@ -31,12 +30,10 @@ function App() {
 
   return (
     <div className="app">
-      <TimersComponent time={time} />
+      <TimersComponent currentPlayer={currentPlayer} />
       <BoardComponent
         board={board}
-        setTime={setTime}
-        players={players}
-        setCurrentPlayer={setCurrentPlayer}
+        swapPlayer={swapPlayer}
         currentPlayer={currentPlayer}
         setBoard={setBoard}
       />

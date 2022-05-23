@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Player from './models/Player';
 
 interface TimersComponentProps {
-    time: number,
+  currentPlayer: Player | null,
 }
 
-function TimersComponent({ time }: TimersComponentProps) {
+function TimersComponent({ currentPlayer }: TimersComponentProps) {
+  const [whitePlayerTime, setWhitePlayerTime] = useState(300);
+  const [blackPlayerTime, setBlackPlayerTime] = useState(300);
+  const timerRef = useRef<null | ReturnType<(typeof setInterval)>>(null);
+
+  useEffect(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    timerRef.current = setInterval(() => {
+      const currTime = currentPlayer?.color === 'white' ? setWhitePlayerTime : setBlackPlayerTime;
+      currTime((prev) => prev - 1);
+    }, 1000);
+  }, [currentPlayer]);
+
   return (
     <div className="timer">
-      {time}
+      <div className="timer">
+        Таймер black -
+        {' '}
+        {blackPlayerTime}
+      </div>
+      <div className="timer">
+        Таймер white -
+        {' '}
+        {whitePlayerTime}
+      </div>
     </div>
   );
 }

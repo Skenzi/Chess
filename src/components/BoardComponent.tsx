@@ -3,19 +3,16 @@ import Board from './models/Board';
 import Player from './models/Player';
 import Cell from './models/Cell';
 import CellComponent from './CellComponent';
-import Players from './models/Players';
 
 interface BoardProps {
     board: Board,
-    currentPlayer: Player,
-    players: Players,
+    currentPlayer: Player | null,
     setBoard: React.Dispatch<React.SetStateAction<Board>>,
-    setCurrentPlayer: React.Dispatch<React.SetStateAction<Player>>,
-    setTime: React.Dispatch<React.SetStateAction<number>>,
+    swapPlayer: () => void,
 }
 
 function BoardComponent({
-  board, players, currentPlayer, setCurrentPlayer, setBoard, setTime,
+  board, currentPlayer, setBoard, swapPlayer,
 }: BoardProps) {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
   function updateBoard() {
@@ -24,33 +21,13 @@ function BoardComponent({
     setBoard(newBoard);
   }
 
-  const timerHelper = async () => {
-    const timer = window.setTimeout(() => {
-      const newTime = currentPlayer.getTime() - 1;
-      currentPlayer.setTime(newTime);
-      setTime(newTime);
-      if (newTime === 0) {
-        currentPlayer.stopTimer();
-        console.log(currentPlayer.color, 'loser', currentPlayer.time);
-      }
-      timerHelper();
-    }, 1000);
-    currentPlayer.setTimer(timer);
-  };
-
-  useEffect(() => {
-    timerHelper();
-  }, [currentPlayer]);
-
   const clickHandler = (cell: Cell) => {
     if (selectedCell !== cell && selectedCell?.figure?.canMove(cell)) {
       setSelectedCell(null);
       board.highlightingCells(null);
       selectedCell?.figure?.moveFigure(cell);
-      currentPlayer.stopTimer();
-      players.changeCurrentPlayer();
-      setCurrentPlayer(players.getCurrentPlayer());
-    } else if (cell.figure && cell.figure.color === currentPlayer.color) {
+      swapPlayer();
+    } else if (cell.figure && cell.figure.color === currentPlayer?.color) {
       setSelectedCell(cell);
       board.highlightingCells(cell);
       updateBoard();
