@@ -29,7 +29,8 @@ export default class Figure {
   }
 
   canMove(cell: Cell) {
-    if (cell.figure?.color === this.cell.figure?.color || cell.figure?.name === FigureNames.KING) return false;
+    if (cell.figure?.color === this.cell.figure?.color
+      || cell.figure?.name === FigureNames.KING) return false;
     return true;
   }
 

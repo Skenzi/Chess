@@ -14,11 +14,9 @@ export default class King extends Figure {
     if (!super.canMove(cell)) {
       return false;
     }
-    const nextX = this.cell.x + 1;
-    const prevX = this.cell.x - 1;
-    const nextY = this.cell.y + 1;
-    const prevY = this.cell.y - 1;
-    if ((cell.x >= prevX && cell.x <= nextX) && (cell.y >= prevY && cell.y <= nextY)) {
+    const dx = Math.abs(this.cell.x - cell.x);
+    const dy = Math.abs(this.cell.y - cell.y);
+    if ((dx === 1 && dy === 1) || (dx === 0 && dy === 1) || (dx === 1 && dy === 0)) {
       if (this.cell.isEmptyDiagonal(cell)) {
         return true;
       }

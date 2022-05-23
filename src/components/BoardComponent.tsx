@@ -29,10 +29,18 @@ function BoardComponent({
       const newTime = currentPlayer.getTime() - 1;
       currentPlayer.setTime(newTime);
       setTime(newTime);
+      if (newTime === 0) {
+        currentPlayer.stopTimer();
+        console.log(currentPlayer.color, 'loser', currentPlayer.time);
+      }
       timerHelper();
     }, 1000);
     currentPlayer.setTimer(timer);
   };
+
+  useEffect(() => {
+    timerHelper();
+  }, [currentPlayer]);
 
   const clickHandler = (cell: Cell) => {
     if (selectedCell !== cell && selectedCell?.figure?.canMove(cell)) {
@@ -43,7 +51,6 @@ function BoardComponent({
       players.changeCurrentPlayer();
       setCurrentPlayer(players.getCurrentPlayer());
     } else if (cell.figure && cell.figure.color === currentPlayer.color) {
-      timerHelper();
       setSelectedCell(cell);
       board.highlightingCells(cell);
       updateBoard();

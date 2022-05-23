@@ -14,6 +14,7 @@ function App() {
   const [time, setTime] = useState(300);
 
   function restart() {
+    currentPlayer.stopTimer();
     const newBoard = new Board();
     const newPlayers = new Players();
     newBoard.initCells();

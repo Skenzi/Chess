@@ -14,15 +14,8 @@ export default class Knight extends Figure {
     if (!super.canMove(cell)) {
       return false;
     }
-    if ((this.cell.y + 1 === cell.y && this.cell.x + 2 === cell.x)) return true;
-    if ((this.cell.y + 1 === cell.y && this.cell.x - 2 === cell.x)) return true;
-    if ((this.cell.y - 1 === cell.y && this.cell.x + 2 === cell.x)) return true;
-    if ((this.cell.y - 1 === cell.y && this.cell.x - 2 === cell.x)) return true;
-
-    if ((this.cell.y + 2 === cell.y && this.cell.x + 1 === cell.x)) return true;
-    if ((this.cell.y + 2 === cell.y && this.cell.x - 1 === cell.x)) return true;
-    if ((this.cell.y - 2 === cell.y && this.cell.x + 1 === cell.x)) return true;
-    if ((this.cell.y - 2 === cell.y && this.cell.x - 1 === cell.x)) return true;
-    return false;
+    const dx = Math.abs(this.cell.x - cell.x);
+    const dy = Math.abs(this.cell.y - cell.y);
+    return (dx === 1 && dy === 2) || (dx === 2 && dy === 1);
   }
 }
